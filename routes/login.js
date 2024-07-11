@@ -2,7 +2,6 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const cryptoJs = require('crypto-js');
 const db = require('../db');
-const utils = require('../utils');
 const config = require('../config');
 
 const router = express.Router();
@@ -11,17 +10,23 @@ const router = express.Router();
 router.post('/login', (request, response) => {
   const { mobile_no, password } = request.body;
 
-  console.log(request.body)
+  if (!mobile_no || !password) {
+    return response.status(400).send({ status: 'error', error: 'Missing mobile number or password' });
+  }
+
   const encryptedPassword = String(cryptoJs.MD5(password));
 
   const statement = `
     SELECT * FROM user WHERE mobile_no = ? AND password = ?
   `;
-  db.pool.query(statement, [mobile_no, password], (error, users) => {
-    console.log(error)
-    console.log(users)
-    if (error || users.length === 0) {
-      return response.send({ status: 'error', error: 'Invalid credentials' });
+  db.pool.query(statement, [mobile_no, encryptedPassword], (error, users) => {
+    if (error) {
+      console.error('Database query error:', error);
+      return response.status(500).send({ status: 'error', error: 'Internal server error' });
+    }
+
+    if (users.length === 0) {
+      return response.status(401).send({ status: 'error', error: 'Invalid credentials' });
     }
 
     const user = users[0];
