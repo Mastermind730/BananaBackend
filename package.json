@@ -1,0 +1,24 @@
+{
+  "name": "harvesting",
+  "version": "1.0.0",
+  "description": "This project is related to the harvested products of farmer.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "Ajinkya Korekar",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.9.3",
+    "nodemon": "^3.1.0",
+    "twilio": "^5.0.4",
+    "ws": "^8.17.0"
+  }
+}
