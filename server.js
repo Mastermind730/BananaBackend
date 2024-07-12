@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 // Apply authentication middleware globally
-app.use(authenticateJWT);
+// app.use(authenticateJWT);
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
