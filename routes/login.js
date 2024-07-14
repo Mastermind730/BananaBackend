@@ -19,7 +19,7 @@ router.post('/login', (request, response) => {
   const statement = `
     SELECT * FROM user WHERE mobile_no = ? AND password = ?
   `;
-  db.pool.query(statement, [mobile_no, encryptedPassword], (error, users) => {
+  db.pool.query(statement, [mobile_no, password], (error, users) => {
     if (error) {
       console.error('Database query error:', error);
       return response.status(500).send({ status: 'error', error: 'Internal server error' });
