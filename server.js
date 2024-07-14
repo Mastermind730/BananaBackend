@@ -53,10 +53,7 @@ const companyRouter = require('./routes/company')(wss);
 const labourRouter = require('./routes/labour')(wss);
 const billsRouter = require('./routes/bills');
 
-
-app.use('/',(request,response)=>{
-  response.send(utils.createResult(null,'Harvest API server is running'))
-})
+// Define routes with their respective routers
 app.use('/harvest', loginRouter);
 app.use('/harvest', farmerRouter);
 app.use('/harvest', userRouter);
@@ -64,6 +61,16 @@ app.use('/harvest', harvestedDataRouter);
 app.use('/harvest', companyRouter);
 app.use('/harvest', labourRouter);
 app.use('/harvest', billsRouter);
+
+// Default route handler for root
+app.get('/', (req, res) => {
+  res.send(utils.createResult(null, 'Harvest API server is running'));
+});
+
+// Catch-all route handler for any other paths
+app.use('*', (req, res) => {
+  res.status(404).send('Not Found');
+});
 
 server.listen(port, '0.0.0.0', () => {
   console.log(`Server started on port ${port}`);
