@@ -53,6 +53,10 @@ const companyRouter = require('./routes/company')(wss);
 const labourRouter = require('./routes/labour')(wss);
 const billsRouter = require('./routes/bills');
 
+
+app.use('/',(request,response)=>{
+  response.send(utils.createResult(null,'Harvest API server is running'))
+})
 app.use('/harvest', loginRouter);
 app.use('/harvest', farmerRouter);
 app.use('/harvest', userRouter);
